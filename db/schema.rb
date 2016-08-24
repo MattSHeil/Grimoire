@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160821004138) do
+ActiveRecord::Schema.define(version: 20160824213712) do
+
+  create_table "labeled_mangas", force: :cascade do |t|
+    t.integer  "manga_id"
+    t.integer  "label_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["label_id"], name: "index_labeled_mangas_on_label_id"
+    t.index ["manga_id"], name: "index_labeled_mangas_on_manga_id"
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "mangas", force: :cascade do |t|
     t.string   "title"
