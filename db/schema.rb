@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160812235028) do
+ActiveRecord::Schema.define(version: 20160821004138) do
 
   create_table "mangas", force: :cascade do |t|
     t.string   "title"
     t.string   "link_to_page"
     t.integer  "total_chapters"
-    t.integer  "last_chapter"
+    t.decimal  "last_chapter"
     t.string   "posted_date"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
