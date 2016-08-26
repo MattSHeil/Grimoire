@@ -7,93 +7,70 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'nokogiri'
 require 'open-uri'
+# def mangaDbSeed
+# 	titleUrlObj = []
 
-titleUrlObj = []
+# 	mangalist = Nokogiri::HTML(open("http://www.mangahere.co/mangalist/"))
 
-mangalist = Nokogiri::HTML(open("http://www.mangahere.co/mangalist/"))
+# 	mangalist.css("div.list_manga ul li a").each do | mangaList |
+# 		titleUrlObj.push({name: mangaList.content, url: mangaList['href']})
+# 	end
 
-mangalist.css("div.list_manga ul li a").each do | mangaList |
-	titleUrlObj.push({name: mangaList.content, url: mangaList['href']})
-end
+# 	titleUrlObj.each do | singleMO |
+		
+# 		mangaPageRequest = Nokogiri::HTML(open(singleMO[:url]))
 
-titleUrlObj.each do | singleMO |
-	
-	mangaPageRequest = Nokogiri::HTML(open(singleMO[:url]))
+# 		lastChapterScopingRequest = mangaPageRequest.css("div.detail_list ul li span.left a").first
+# 		lastChapterPostDateRequest = mangaPageRequest.css("div.detail_list ul li span.right").first
 
-	lastChapterScopingRequest = mangaPageRequest.css("div.detail_list ul li span.left a").first
-	lastChapterPostDateRequest = mangaPageRequest.css("div.detail_list ul li span.right").first
+# 		if lastChapterScopingRequest
+# 			total = 0 
+# 			theLastChapter = lastChapterScopingRequest.content.split(" ").pop
+# 			thePostedDate = lastChapterPostDateRequest.content
 
-	if lastChapterScopingRequest
-		total = 0 
-		theLastChapter = lastChapterScopingRequest.content.split(" ").pop
-		thePostedDate = lastChapterPostDateRequest.content
+# 			mangaPageRequest.css("div.detail_list ul li a").each do | chapter_link |
+# 				total += 1
+# 			end	
 
-		mangaPageRequest.css("div.detail_list ul li a").each do | chapter_link |
-			total += 1
-		end	
+# 			Manga.create(
+# 				title: singleMO[:name],
+# 				link_to_page: singleMO[:url],
+# 				total_chapters: total,
+# 				last_chapter: theLastChapter,
+# 				posted_date: thePostedDate
+# 			)
 
-		Manga.create(
-			title: singleMO[:name],
-			link_to_page: singleMO[:url],
-			total_chapters: total,
-			last_chapter: theLastChapter,
-			posted_date: thePostedDate
-		)
-
-	else 
-		Manga.create(
-			title: singleMO[:name],
-			link_to_page: singleMO[:url],
-			total_chapters: 0,
-			last_chapter: 0,
-			posted_date: "none"
-		)
-	end	
-end
-
-# linksArray
-
-# 	mangaLink = mangaList['href']
-	
-# 	mangaPageRequest = Nokogiri::HTML(open(mangaLink))
-
-
-# 	lastChapterScopingRequest = mangaPageRequest.css("div.detail_list ul li span.left a").first
-# 	lastChapterPostDateRequest = mangaPageRequest.css("div.detail_list ul li span.right").first
-
-# 	if lastChapterScopingRequest
-# 		total = 0 
-
-# 		mangaPageRequest.css("div.detail_list ul li a").each do | chapter_link |
-# 			total += 1
+# 		else 
+# 			Manga.create(
+# 				title: singleMO[:name],
+# 				link_to_page: singleMO[:url],
+# 				total_chapters: 0,
+# 				last_chapter: 0,
+# 				posted_date: "none"
+# 			)
 # 		end	
-
-# 		Manga.create(
-# 			title: mangaList.content,
-# 			link_to_page: mangaLink,
-# 			total_chapters: total.length,
-# 			last_chapter: lastChapterScopingRequest.content.split(" ").pop,
-# 			posted_date: lastChapterPostDateRequest.content
-# 		)
-
-# 	else 
-# 		Manga.create(
-# 			title: mangaList.content,
-# 			link_to_page: mangaLink,
-# 			total_chapters: 0,
-# 			last_chapter: 0,
-# 			posted_date: "none"
-# 		)
-# 	end	
+# 	end
 # end
 
+mangaDb = Manga.all
+
+mangaDb.each do | singleManga |
+
+	pageRequest = Nokogiri::HTML(open(singleManga.link_to_page))
+	labelsScoping = pageRequest.css("ul.detail_topText li[4]").first.content 
+	mostLabels = labelsScoping.split(", ")
+	lastLabel = mostLabels.delete_at(0).split(":").pop
+	mostLabels.push(lastLabel)
+
+	mostLabels.each do | toAddLabel |
+
+		if toAddLabel
+			singleManga.labels.push(Label.find_by(name: toAddLabel))
+		end
+	end
+
+end
 
 
 
-# # def calculateTotalChapters(aMangaPage)
-# # 	total = []
-# # 	doc.css("div.detail_list ul li a").each do | link |
-# # 		total.push(link)
-# # 	end	
-# # 	return total.length
-# # end
+
