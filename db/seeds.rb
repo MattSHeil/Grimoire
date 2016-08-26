@@ -52,23 +52,36 @@ require 'open-uri'
 # 	end
 # end
 
+# Adds a single manga labels.
+# mangaObj = Manga.first
+# pageRequest = Nokogiri::HTML(open(mangaObj.link_to_page))
+# labelsScoping = pageRequest.css("ul.detail_topText li[4]").first.content
+# mostLabels = labelsScoping.split(", ")
+# lastLabel = mostLabels.delete_at(0).split(":").pop
+# mostLabels.push(lastLabel)
+
+# mostLabels.each do | toAddLabel |
+# 	mangaObj.labels.push(Label.find_by(name: toAddLabel))
+# end
+
 mangaDb = Manga.all
 
 mangaDb.each do | singleManga |
 
 	pageRequest = Nokogiri::HTML(open(singleManga.link_to_page))
-	labelsScoping = pageRequest.css("ul.detail_topText li[4]").first.content 
-	mostLabels = labelsScoping.split(", ")
-	lastLabel = mostLabels.delete_at(0).split(":").pop
-	mostLabels.push(lastLabel)
+	if 	pageRequest.css("ul.detail_topText li[4]").first.content
+		labelsScoping = pageRequest.css("ul.detail_topText li[4]").first.content 
+		mostLabels = labelsScoping.split(", ")
+		lastLabel = mostLabels.delete_at(0).split(":").pop
+		mostLabels.push(lastLabel)
 
-	mostLabels.each do | toAddLabel |
+		mostLabels.each do | toAddLabel |
 
-		if toAddLabel
-			singleManga.labels.push(Label.find_by(name: toAddLabel))
+			if toAddLabel
+				singleManga.labels.push(Label.find_by(name: toAddLabel))
+			end
 		end
 	end
-
 end
 
 
