@@ -69,17 +69,16 @@ mangaDb = Manga.all
 mangaDb.each do | singleManga |
 
 	pageRequest = Nokogiri::HTML(open(singleManga.link_to_page))
-	if 	pageRequest.css("ul.detail_topText li[4]").first.content
-		labelsScoping = pageRequest.css("ul.detail_topText li[4]").first.content 
-		mostLabels = labelsScoping.split(", ")
+	labelsScoping = pageRequest.css("ul.detail_topText li[4]").first	
+	if 	labelsScoping 
+		mostLabels = labelsScoping.content.split(", ")
 		lastLabel = mostLabels.delete_at(0).split(":").pop
 		mostLabels.push(lastLabel)
 
+		puts singleManga.id 
+		
 		mostLabels.each do | toAddLabel |
-
-			if toAddLabel
-				singleManga.labels.push(Label.find_by(name: toAddLabel))
-			end
+			singleManga.labels.push(Label.find_or_create_by(name: toAddLabel.capitalize))
 		end
 	end
 end
