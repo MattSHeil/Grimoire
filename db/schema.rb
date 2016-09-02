@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902224426) do
+ActiveRecord::Schema.define(version: 20160902230338) do
 
   create_table "artists", force: :cascade do |t|
     t.string   "name"
@@ -47,6 +47,24 @@ ActiveRecord::Schema.define(version: 20160902224426) do
     t.string   "posted_date"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "mangas_artists", force: :cascade do |t|
+    t.integer  "manga_id_id"
+    t.integer  "author_id_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["author_id_id"], name: "index_mangas_artists_on_author_id_id"
+    t.index ["manga_id_id"], name: "index_mangas_artists_on_manga_id_id"
+  end
+
+  create_table "mangas_authors", force: :cascade do |t|
+    t.integer  "manga_id_id"
+    t.integer  "author_id_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["author_id_id"], name: "index_mangas_authors_on_author_id_id"
+    t.index ["manga_id_id"], name: "index_mangas_authors_on_manga_id_id"
   end
 
 end

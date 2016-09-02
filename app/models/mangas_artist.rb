@@ -1,0 +1,2 @@
+class MangasArtist < ApplicationRecord
+end
