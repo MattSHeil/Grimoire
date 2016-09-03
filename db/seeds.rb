@@ -64,22 +64,40 @@ require 'open-uri'
 # 	mangaObj.labels.push(Label.find_by(name: toAddLabel))
 # end
 
-mangaDb = Manga.all
+mangaDb = Manga.where(:id => 5018..17120)
+# Seeding for labels
+# mangaDb.each do | singleManga |
+# 	pageRequest = Nokogiri::HTML(open(singleManga.link_to_page))
+# 	labelsScoping = pageRequest.css("ul.detail_topText li[4]").first	
+# 	if 	labelsScoping 
+# 		mostLabels = labelsScoping.content.split(", ")
+# 		lastLabel = mostLabels.delete_at(0).split(":").pop
+# 		mostLabels.push(lastLabel)
+# 		puts singleManga.id 
+# 		mostLabels.each do | toAddLabel |
+# 			singleManga.labels.push(Label.find_or_create_by(name: toAddLabel.capitalize))
+# 		end
+# 	end
+# end
 
 mangaDb.each do | singleManga |
 
 	pageRequest = Nokogiri::HTML(open(singleManga.link_to_page))
-	labelsScoping = pageRequest.css("ul.detail_topText li[4]").first	
-	if 	labelsScoping 
-		mostLabels = labelsScoping.content.split(", ")
-		lastLabel = mostLabels.delete_at(0).split(":").pop
-		mostLabels.push(lastLabel)
-
-		puts singleManga.id 
-		
-		mostLabels.each do | toAddLabel |
-			singleManga.labels.push(Label.find_or_create_by(name: toAddLabel.capitalize))
+	authorScoping = pageRequest.css("ul.detail_topText li[5]").first	
+	artistScoping = pageRequest.css("ul.detail_topText li[6]").first	
+	if 	authorScoping 
+		authorName = authorScoping.content.split(":").pop
+		authorArray = authorName.split(", ")
+		authorArray.each do | singleAuthor |
+			singleManga.authors.push(Author.find_or_create_by(name: singleAuthor.capitalize))
 		end
+		
+		artistName = artistScoping.content.split(":").pop
+		artistArray = artistName.split(", ")
+		artistArray.each do | singleArtist |
+			singleManga.artists.push(Artist.find_or_create_by(name: singleArtist.capitalize))
+		end
+		puts singleManga.id
 	end
 end
 

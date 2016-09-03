@@ -50,21 +50,21 @@ ActiveRecord::Schema.define(version: 20160902230338) do
   end
 
   create_table "mangas_artists", force: :cascade do |t|
-    t.integer  "manga_id_id"
-    t.integer  "author_id_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["author_id_id"], name: "index_mangas_artists_on_author_id_id"
-    t.index ["manga_id_id"], name: "index_mangas_artists_on_manga_id_id"
+    t.integer  "manga_id"
+    t.integer  "artist_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_id"], name: "index_mangas_artists_on_artist_id"
+    t.index ["manga_id"], name: "index_mangas_artists_on_manga_id"
   end
 
   create_table "mangas_authors", force: :cascade do |t|
-    t.integer  "manga_id_id"
-    t.integer  "author_id_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["author_id_id"], name: "index_mangas_authors_on_author_id_id"
-    t.index ["manga_id_id"], name: "index_mangas_authors_on_manga_id_id"
+    t.integer  "manga_id"
+    t.integer  "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_mangas_authors_on_author_id"
+    t.index ["manga_id"], name: "index_mangas_authors_on_manga_id"
   end
 
 end
