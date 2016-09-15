@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'whenever', :require => false
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
