@@ -9,4 +9,7 @@ class Manga < ApplicationRecord
 
 	has_many :mangas_artists
 	has_many :artists, through: :mangas_artists
+
+	has_many :user_mangas
+	has_many :users, through: :user_mangas
 end

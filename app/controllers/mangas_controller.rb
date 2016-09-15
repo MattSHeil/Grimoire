@@ -33,7 +33,33 @@ class MangasController < ApplicationController
 		render json: theManga
 	end
 
-	def delete
+	def searchLabel
+		result = Label.find_by(name: params[:keyword].capitalize)
+		unless result
+			render json: {error: "Opps genre problem, try again ..."},
+				status: 404
+			return
+		end	
+		render json: result.mangas
+	end
+
+	def searchName
+       result = if (params[:keyword]).length == 1 
+		     	 	Manga.where("title iLIKE ?" , "#{params[:keyword]}%")
+			 	else
+					Manga.where("lower(title) = ?", params[:keyword].downcase)
+				end
+				unless result
+				 	render json: {error: "Manga doesn't exist yet"},
+				 	 	status: 404
+				    return
+				end
+		render json: result
+	end
+
+	def search
+		@user = current_user
+		@searchableLabels = Label.all
 	end
 
 	private
