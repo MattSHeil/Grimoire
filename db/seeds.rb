@@ -1,10 +1,10 @@
-require 'db_seeding_mangahere'
-require 'db_updating_mangahere' 
+require 'mangahere_data_base'
+require 'updating_mangahere_db' 
 # require 'nokogiri'
 # require 'open-uri'
 
 mangaHere = MangaHereDataBase.new
-mhUpdate = UpdatingMangahereDB.new
+mhUpdate = UpdatingMangahereDb.new
 
 # Creates All Manga objs 
 # mangaHere.getAllMangaObjs("http://www.mangahere.co/mangalist/")

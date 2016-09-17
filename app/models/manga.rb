@@ -1,4 +1,5 @@
 class Manga < ApplicationRecord
+
 	validates :title, uniqueness: true 
 
 	has_many :labeled_mangas
@@ -12,4 +13,5 @@ class Manga < ApplicationRecord
 
 	has_many :user_mangas
 	has_many :users, through: :user_mangas
+	
 end

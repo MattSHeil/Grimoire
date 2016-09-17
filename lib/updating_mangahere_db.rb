@@ -1,10 +1,14 @@
 require 'nokogiri'
 require 'open-uri'
 
-class UpdatingMangahereDB
+class UpdatingMangahereDb
 	def initialize
 		@savepoint = LastUpdate.last
 		@url = 'http://www.mangahere.co/latest/'
+	end
+
+	def test 
+		puts "Hey I work from the lib folder"
 	end
 
 	def scrapeLatestPage
@@ -15,6 +19,66 @@ class UpdatingMangahereDB
 		end
 		# puts titleUrlObjToUpdate
 		return titleUrlObjToUpdate
+	end
+
+	def authorObjc(request, mangaTBA)
+		authorNames = request.content.split(":").pop
+		authorArray = authorNames.split(", ")
+		authorArray.each do | singleAuthor |
+			mangaTBA.authors.push(Author.find_or_create_by(name: singleAuthor.capitalize))
+		end
+	end
+
+	def artistObjc(request, mangaTBA)
+		artistName = request.content.split(":").pop
+		artistArray = artistName.split(", ")
+		artistArray.each do | singleArtist |
+			mangaTBA.artists.push(Artist.find_or_create_by(name: singleArtist.capitalize))
+		end
+	end
+
+	def getAA(mangaObj)
+	
+		pageRequest = Nokogiri::HTML(open(mangaObj.link_to_page))
+		authorScoping = pageRequest.css("ul.detail_topText li[5]").first	
+		artistScoping = pageRequest.css("ul.detail_topText li[6]").first
+
+		if 	authorScoping 
+		
+			authorObjc(authorScoping, mangaObj)
+			artistObjc(artistScoping, mangaObj)
+
+			puts "AA created for #{mangaObj.title}"
+		end
+	end
+
+	def getAllLabels(mangaObj)
+		pageRequest = Nokogiri::HTML(open(mangaObj.link_to_page))
+		labelsScoping = pageRequest.css("ul.detail_topText li[4]").first	
+		if 	labelsScoping 
+			labels = labelsScoping.content.split(":").pop
+			labelsArray = labels.split(", ")
+			# puts singleManga.id
+			# puts labelsArray
+			labelsArray.each do | toAddLabel |
+				mangaObj.labels.push(Label.find_or_create_by(name: toAddLabel.capitalize))
+			end
+			puts "Labels added to #{singleManga.title}"
+		end
+	end
+
+	def getExtraInfo(mangaTitle)
+
+		thisManga = Manga.find_by(title: mangaTitle)
+
+		if thisManga.nil?
+			puts "Returning nil ..."
+			puts "Check #{mangaTitle}"
+		else 
+			getAA(thisManga)
+			getAllLabels(thisManga)
+		end
+
 	end
 
 	def updateDB
@@ -58,6 +122,8 @@ class UpdatingMangahereDB
 					posted_date: postedDate
 				)
 				puts "NEW MANGA ENTRY: #{toUpdate[:name]}"
+
+				getExtraInfo(toUpdate[:name])
 			end	
 		end
 		LastUpdate.create(title: checkPoint[:name], link_to_page: checkPoint[:link])
@@ -80,8 +146,8 @@ class UpdatingMangahereDB
 			updateDates(singleTodayManga)
 		end
 
-		yesterdaysMangas.each do | singleTodayManga |	
-			updateDates(singleTodayManga)
+		yesterdaysMangas.each do | singleYesterdayManga |	
+			updateDates(singleYesterdayManga)
 		end
 	end
 
