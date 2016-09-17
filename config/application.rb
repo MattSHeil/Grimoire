@@ -11,7 +11,7 @@ module Grimoire
   class Application < Rails::Application
     
     config.autoload_paths += Dir["#{Rails.root}/app/models/**/"]
-	config.autoload_paths += Dir["#{config.root}/lib"]
+	  config.autoload_paths += Dir["#{config.root}/lib"]
 
   	config.action_mailer.delivery_method = :smtp
   	config.action_mailer.smtp_settings = {
