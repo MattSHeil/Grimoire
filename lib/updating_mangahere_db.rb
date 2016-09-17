@@ -63,7 +63,7 @@ class UpdatingMangahereDb
 			labelsArray.each do | toAddLabel |
 				mangaObj.labels.push(Label.find_or_create_by(name: toAddLabel.capitalize))
 			end
-			puts "Labels added to #{singleManga.title}"
+			puts "Labels added to #{mangaObj.title}"
 		end
 	end
 
