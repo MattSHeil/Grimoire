@@ -15,4 +15,5 @@ class User < ApplicationRecord
   def send_welcome_email
     WelcomeMailer.welcome_email(self).deliver_later
   end
+  
 end

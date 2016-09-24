@@ -24,5 +24,6 @@ mhUpdate = UpdatingMangahereDb.new
 #crossreference db
 # mangaHere.crossReferenceDb
 
+
 #after creating new mangas adds the rest of their respective realtional db
 # mangaHere.getMissingInfo

@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources :mangas, except: [:new, :edit]
   get '/search', to: 'mangas#search', as: :search_manga
 
-
   # API request routes
   get "/mangas/search/:keyword", to: "mangas#searchLabel"
   get "/mangas/list/:keyword", to: "mangas#searchName"
