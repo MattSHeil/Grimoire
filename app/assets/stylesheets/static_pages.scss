@@ -1,3 +1,48 @@
 // Place all the styles related to the static_pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+ body {
+ 	background-color: #935d8c;
+	background-image: url('/assets/overlay.png'), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url('/assets/overlay.png'), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url('/assets/overlay.png'), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url('/assets/overlay.png'), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+}
+
+.hp-btn {
+	border: 2px solid;
+	border-radius: 8px;
+	margin-bottom: 3%; 
+}
+
+.grimoire_logo_home {
+	padding-top: 3%;
+	width: 30%;
+}
+
+.home_main_container {
+	border-radius: 8px;
+	background-color: white;
+}
+
+.home_content {
+	padding: 0% 3% 3% 3%;  	
+}
+
+.search_form {
+	display: inline-block;
+	width: 40%;
+	padding-left: 2%;
+}
+
+ul.nav-links.right a {
+	margin-left: 0px; 
+	padding-left: 20px;
+	padding-right: 20px;
+}
+// .Search_form {
+// 	width: 30%; 
+// 	margin: none;
+// 	display: inline-block;
+// }

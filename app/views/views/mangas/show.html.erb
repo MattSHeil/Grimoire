@@ -1,0 +1,40 @@
+<div class="container home_main_container">
+	<!-- Navbar -->
+	<%= render 'layouts/navbar'%>
+
+	<!-- Main -->
+	<div class="container">
+		<section class="manga_info row">
+			<h1><%= @manga.title %></h1>
+			<div class="col s6">
+				<img src="#">
+			</div>
+			<div class="col s6">
+				<ul>
+					<li><h5># of Chapters:</h5> <h5><small><%= @manga.total_chapters %></small></h5></li>	
+					<li><h5>Last Updated:</h5> <h5><small><%= @manga.posted_date %></small></h5></li>	
+				</ul>
+				<ul><h5>Author(s):</h5>
+					<% @author.each do | singleAuthor | %> 
+						<li><h5><small><%= singleAuthor.name %></small></h5></li>	
+					<% end %>
+				</ul>
+				<ul><h5>Artists(s):</h5>
+					<% @artist.each do | singleArtist | %> 
+						<li><h5><small><%= singleArtist.name %></small></h5></li>	
+					<% end %>
+				</ul>
+			</div>
+		</section>
+
+
+
+		<section class="manga_chapters">
+			<h3>Chapters:</h3>
+			<ul>
+			</ul>
+		</section>
+
+	</div>
+
+</div>

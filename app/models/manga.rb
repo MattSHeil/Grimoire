@@ -13,4 +13,12 @@ class Manga < ApplicationRecord
 
 	has_many :user_mangas
 	has_many :users, through: :user_mangas
+
+	def self.search(params)
+		where("title iLIKE ?" , "%#{params}%")
+	end
+
+	def self.latests
+		order(updated_at: :desc).limit(50)
+	end
 end
