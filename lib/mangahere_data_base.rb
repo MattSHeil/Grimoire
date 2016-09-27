@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
 
-class MangaHereDataBase
+class MangahereDataBase
 	def initialize
 	end
 
