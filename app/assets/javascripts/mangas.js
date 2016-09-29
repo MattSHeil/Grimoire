@@ -35,14 +35,13 @@ $(document).ready(function(){
 
 	});
 
-	$(".add-btn").on('click', function(event){
-		event.preventDefault();
+	$("#add-btn").on('click', function(){
 
-		var idToBeAdded = $('.add-btn').data('id');
+		var idToBeAdded = $(this).data('id');
 
 		$.ajax({
 			type: "POST",
-			url: `/mangas/${idToBeAdded}/add`,
+			url: "/mangas/"+ idToBeAdded +"/add",
 			success: addMangaSuccess,
 			error: addMangaError
 		});
@@ -50,22 +49,21 @@ $(document).ready(function(){
 
 	function addMangaSuccess(response){
 		console.log("I adds")
-		$(".add-btn").toggleClass("hide")
-		$(".delete-btn").toggleClass("hide")
+		$("#add-btn").toggleClass("hide")
+		$("#delete-btn").toggleClass("hide")
 	};
 
 	function addMangaError(response){
 		console.log("I dont adds")
 	};
 
-	$(".delete-btn").on('click', function(event){
-		event.preventDefault();
+	$("#delete-btn").on('click', function(){
 
-		var idToBeAdded = $('.delete-btn').data('id');
+		var idToBeAdded = $(this).data('id');
 
 		$.ajax({
 			type: "DELETE",
-			url: `/mangas/${idToBeAdded}/delete`,
+			url: "/mangas/"+ idToBeAdded +"/delete",
 			success: deleteMangaSuccess,
 			error: deleteMangaError
 		});
@@ -73,8 +71,8 @@ $(document).ready(function(){
 
 	function deleteMangaSuccess(response){
 		console.log("I deletes")
-		$(".delete-btn").toggleClass("hide")
-		$(".add-btn").toggleClass("hide")
+		$("#delete-btn").toggleClass("hide")
+		$("#add-btn").toggleClass("hide")
 	};
 
 	function deleteMangaError(response){

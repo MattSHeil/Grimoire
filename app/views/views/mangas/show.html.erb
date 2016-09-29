@@ -18,17 +18,17 @@
 					</button>
 				<% else %>
 					<% if current_user.mangas.find_by(id: @manga.id).nil? %>
-						<button class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn add-btn" data-id="<%= @manga.id%>">
+						<button id="add-btn" class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn" data-id="<%= @manga.id%>">
 							Add to Grimoire
 						</button>
-						<button class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn delete-btn hide" data-id="<%= @manga.id%>">
+						<button id="delete-btn" class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn hide" data-id="<%= @manga.id%>">
 							Delete From Grimoire
 						</button>
 					<% else %>
-						<button class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn add-btn hide" data-id="<%= @manga.id%>">
+						<button id="add-btn" class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn hide" data-id="<%= @manga.id%>">
 							Add to Grimoire
 						</button>
-						<button class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn delete-btn" data-id="<%= @manga.id%>">
+						<button id="delete-btn" class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn" data-id="<%= @manga.id%>">
 							Delete From Grimoire
 						</button>
 					<% end %>
