@@ -149,7 +149,7 @@ class MangaHereDataBase
 		count = 0 
 		fullObj = []
 		doc = Nokogiri::HTML(open("http://www.mangahere.co/mangalist/"))
-			doc.css("div.list_manga ul li a", ).each do | link |
+		doc.css("div.list_manga ul li a", ).each do | link |
 			count += 1 
 			fullObj.push({name: link.content, url: link['href']})
 		end
@@ -168,6 +168,15 @@ class MangaHereDataBase
 				singleMangaObj(mangaObj)			
 			end
 		end
+	end
+
+	def getImages
+		db = Manga.all
+		db.each do | singleManga |
+			pageRequest = Nokogiri::HTML(open(singleManga.link_to_page))
+			pageRequest.css("div.manga_detail_top img").first['src']
+			
+		end	
 	end
 
 
