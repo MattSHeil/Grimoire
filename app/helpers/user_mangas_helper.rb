@@ -1,0 +1,2 @@
+module UserMangasHelper
+end

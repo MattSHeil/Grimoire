@@ -6,4 +6,5 @@ class UsersController < ApplicationController
 		@mangas = @user.mangas
 		render 'users/show'
 	end
+	
 end

@@ -1,25 +1,51 @@
 <div class="container home_main_container">
 	<!-- Navbar -->
 	<%= render 'layouts/navbar'%>
-
+	
 	<!-- Main -->
 	<div class="container">
-		<section class="manga_info row">
+		<section class="row">
 			<h1><%= @manga.title %></h1>
 			<div class="col s6">
-				<img src="#">
+				
+				<div class="row center">
+					<img src="#">
+				</div>
+				<div class="row center">
+				<% if current_user.nil? %>
+					<button class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn">
+						Log In to Add This Manga
+					</button>
+				<% else %>
+					<% if current_user.mangas.find_by(id: @manga.id).nil? %>
+						<button class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn add-btn" data-id="<%= @manga.id%>">
+							Add to Grimoire
+						</button>
+						<button class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn delete-btn hide" data-id="<%= @manga.id%>">
+							Delete From Grimoire
+						</button>
+					<% else %>
+						<button class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn add-btn hide" data-id="<%= @manga.id%>">
+							Add to Grimoire
+						</button>
+						<button class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn delete-btn" data-id="<%= @manga.id%>">
+							Delete From Grimoire
+						</button>
+					<% end %>
+				<% end %>
+			</div>
 			</div>
 			<div class="col s6">
-				<ul>
-					<li><h5># of Chapters:</h5> <h5><small><%= @manga.total_chapters %></small></h5></li>	
+				<ul class="manga_info">
+					<li><h5># of Chapters:</h5> <h5><small><%= @manga.total_chapters %></small></h5></li>
 					<li><h5>Last Updated:</h5> <h5><small><%= @manga.posted_date %></small></h5></li>	
 				</ul>
-				<ul><h5>Author(s):</h5>
+				<ul class="manga_info"><h5>Author(s):</h5>
 					<% @author.each do | singleAuthor | %> 
 						<li><h5><small><%= singleAuthor.name %></small></h5></li>	
 					<% end %>
 				</ul>
-				<ul><h5>Artists(s):</h5>
+				<ul class="manga_info"><h5>Artists(s):</h5>
 					<% @artist.each do | singleArtist | %> 
 						<li><h5><small><%= singleArtist.name %></small></h5></li>	
 					<% end %>
@@ -27,7 +53,7 @@
 			</div>
 		</section>
 
-
+	  <div class="divider"></div>
 
 		<section class="manga_chapters">
 			<h3>Chapters:</h3>

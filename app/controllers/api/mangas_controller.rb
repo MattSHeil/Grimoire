@@ -32,34 +32,25 @@ class Api::MangasController < ApplicationController
 		render json: theManga
 	end
 
-	def searchLabel
-		result = Label.find_by(name: params[:keyword].capitalize)
-		unless result
-			render json: {error: "Opps genre problem, try again ..."},
-				status: 404
-			return
-		end	
-		render json: result.mangas
-	end
-
-	def searchName
-       result = if (params[:keyword]).length == 1 
-		     	 	Manga.where("title iLIKE ?" , "#{params[:keyword]}%")
-			 	else
-					Manga.where("lower(title) iLIKE ?", "#{params[:keyword].downcase}")
-				end
-				unless result
-				 	render json: {error: "Manga search problem ..."},
-				 	 	status: 404
-				    return
-				end
-		render json: result
-	end
-
-	def search
+	def advanced
 		@user = current_user
 		@searchableLabels = Label.all
 	end
+
+	#might need it if api routes change
+	# def search
+ # 		@result = if (params[:keyword]).length == 1 
+	# 	     	 	Manga.where("title iLIKE ?" , "#{params[:keyword]}%")
+	# 		 	else
+	# 				Manga.where("lower(title) iLIKE ?", "%#{params[:keyword].downcase}%")
+	# 			end
+	# 			unless @result
+	# 			 	render json: {error: "Manga search problem ..."},
+	# 			 	 	status: 404
+	# 			    return
+	# 			end
+	# 	render json: @result
+	# end
 
 	private
 
@@ -67,3 +58,14 @@ class Api::MangasController < ApplicationController
 		params.require(:manga).permit(:title, :link_to_page, :total_chapters, :last_chapter, :posted_date)
 	end
 end
+
+#to be implemented later
+# def labelSearch	
+	# result = Label.find_by(name: params[:keyword].capitalize)
+	# unless result
+	# 	render json: {error: "Opps genre problem, try again ..."},
+	# 		status: 404
+	# 	return
+	# end	
+	# render json: result.mangas
+# end

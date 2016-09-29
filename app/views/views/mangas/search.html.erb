@@ -1,38 +1,16 @@
-<div id="wrapper">
-
-	<!-- Header -->
-		<header id="header">
-			<h1>Grimoire Search</h1>
-			<p>Find what you like</p>
-		</header>
+<div class="container home_main_container">
 
 	<!-- Nav -->
-		<nav id="nav">
-			<div>
-			<ul>
-				<% if user_signed_in? %>
-					<li>Hey <%= @user.name %></li>
-					<li><%= link_to 'My Manga', user_page_path(current_user.id) %></li>
-					<li><%= link_to 'Add Manga', search_manga_path %></li>
-					<li><%= link_to 'Log Out',destroy_user_session_path, method: 'DELETE' %></li>
-				<% else %>
-					<li><%= link_to 'Home', root_path %></li>
-					<li><%= link_to 'Log In', new_user_session_path %></li>
-					<li><%= link_to 'Sign Up', new_user_registration_path %></li>
-				<% end %>
-			</ul>
-			<div>
-		</nav>
+	<%= render 'layouts/navbar' %>
 
 	<!-- Main -->
-		<div id="main">
-
+	<div class="container">
 		<!-- Content -->
 			<section id="content" class="main labelsSection">
-				<h2>Here are your options: </h2>
-				<ul id="labelsList"> Genres:<br>
-				<% @searchableLabels.each do | singleLabel | %>
-					<li class="button ajaxit" data-genre=<%= singleLabel.name %>><%= singleLabel.name %></li>
+				<h2>Here's what we got: </h2>
+				<ul class="manga-result">
+				<% @result.each do | singleObject | %>
+					<li><%= link_to singleObject.title, manga_path(singleObject) %></li>
 				<% end %>
 				</ul>
 			</section>
@@ -41,18 +19,20 @@
 				<ul class="SearchedMangas">
 				</ul>
 			</section>
+	</div>
+</div>
 
-		</div>
-
+<!-- footer need to be made into a partial -->
+<div class="container">
 	<!-- Footer -->
-		<footer id="footer">
-			<section>
+	<footer id="footer">
+			<!-- <section>
 				<h2>Aliquam sed mauris</h2>
 				<p>Sed lorem ipsum dolor sit amet et nullam consequat feugiat consequat magna adipiscing tempus etiam dolore veroeros. eget dapibus mauris. Cras aliquet, nisl ut viverra sollicitudin, ligula erat egestas velit, vitae tincidunt odio.</p>
 				<ul class="actions">
 					<li><a href="#" class="button">Learn More</a></li>
 				</ul>
-			</section>
+			</section>-->
 			<section>
 				<h2>Admin Mnatherr</h2>
 				<dl class="alt">
@@ -72,6 +52,6 @@
 				</ul>
 			</section>
 			<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-		</footer>
-
+	</footer>
 </div>
+

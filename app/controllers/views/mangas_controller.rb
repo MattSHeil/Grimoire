@@ -4,4 +4,8 @@ class Views::MangasController < ApplicationController
 		@author = @manga.authors
 		@artist = @manga.artists
 	end
+
+	def search
+        @result = Manga.search(params[:keyword])
+	end
 end

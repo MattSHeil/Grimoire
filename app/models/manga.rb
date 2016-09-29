@@ -15,7 +15,11 @@ class Manga < ApplicationRecord
 	has_many :users, through: :user_mangas
 
 	def self.search(params)
-		where("title iLIKE ?" , "%#{params}%")
+		if (params).length == 1 
+	 		where("title iLIKE ?" , "#{params}%")
+	 	else
+			where("lower(title) iLIKE ?", "%#{params.downcase}%")
+		end
 	end
 
 	def self.latests

@@ -1,11 +1,11 @@
 <nav class="grey lighten-2">
 	<div class="nav-wrapper">
-	<div class="search_form black-text">
-		<%= form_tag(root_path, :method => "get", id: "search-form") do %>
-			<%= text_field_tag :search, params[:search], placeholder: "Search Posts" %>
-			<% submit_tag "Search" %>
-		<% end %>
-	</div>
+		<div class="search_form black-text">
+			<%= form_tag(views_search_manga_path, :method => "get", id: "search-form") do %>
+				<%= text_field_tag :keyword, params[:keyword], placeholder: "Search Manga" %>
+				<% submit_tag "Search" %>
+			<% end %>
+		</div>
 		<ul class="nav-links right">
 			<li><%= link_to 'Home', root_path, class:"waves-effect waves-light btn white grey-text text-darken-1" %></li>
 			<li><%= link_to 'Mangas', mangas_path, class:"waves-effect waves-light btn white grey-text text-darken-1" %></li>
@@ -16,7 +16,6 @@
 				<li><%= link_to 'Log In', new_user_session_path, class:"waves-effect waves-light btn white grey-text text-darken-1" %></li>
 				<li><%= link_to 'Sign Up', user_registration_path, class:"waves-effect waves-light btn white grey-text text-darken-1" %></li>
 			<% end %>
-
 		</ul>
 	</div>
 </nav>
