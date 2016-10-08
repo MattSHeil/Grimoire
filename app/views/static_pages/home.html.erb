@@ -1,4 +1,4 @@
-<!-- Wrapper -->
+ <!-- Wrapper -->
 <div id="wrapper">
 
 	<!-- Header -->
@@ -27,79 +27,50 @@
 							<header class="major">
 								<h2>Newest Updates</h2>
 							</header>
-							<ul class="actions">
-								<% @latests.first(10).each do | singleManga |%>
-									<li><%= singleManga.title %></li>
-								<% end %>
-							</ul>
+							<div class="latests_list_container thumbnails">
+								<ul class="actions latests_list">
+								<div class="row center-align">
+									<% @latests.first(4).each do | singleManga |%>
+									<div class="col s3">
+										<li>
+											<%= link_to image_tag(singleManga.manga_img.cover_img_url, class:"cover-img" ), manga_path(singleManga)%>
+											<%= link_to singleManga.title, manga_path(singleManga)%>
+										</li>
+									</div>
+									<% end %>
+								</div>
+								<div class="row">
+									<% @latests[4..7].each do | singleManga |%>
+									<div class="col s3">
+										<li>
+											<%= link_to image_tag(singleManga.manga_img.cover_img_url), manga_path(singleManga) %>
+											<%= link_to singleManga.title, manga_path(singleManga)%>
+										</li>
+									</div>
+									<% end %>
+								</div>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</section>
 
+				  <div class="divider"></div>
 			<!-- First Section -->
 				<section id="first" class="main special">
-					<header class="major">
-						<h2>What has updated recently</h2>
-					</header>
-					<ul class="features">
-						<% @latests[10..-1].each do | singleManga | %>
-							<li><%= singleManga.title %></li>
-						<% end %>
-					</ul>
-					<footer class="major">
-						<ul class="actions">
-							<li><a href="generic.html" class="button">Learn More</a></li>
+					<div class="container">
+						<header class="major">
+							<h2>What has updated recently</h2>
+						</header>
+						<ul class="features">
+							<% @latests[8..-1].each do | singleManga | %>
+								<li><%= link_to singleManga.title, manga_path(singleManga) %></li>
+								<br>
+							<% end %>
 						</ul>
-					</footer>
+					</div>
 				</section>
-
-			<!-- Get Started -->
-				<section id="cta" class="main special">
-					<header class="major">
-						<h2>Congue imperdiet</h2>
-						<p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
-						posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
-					</header>
-					<footer class="major">
-						<ul class="actions">
-							<li><a href="generic.html" class="button special">Get Started</a></li>
-							<li><a href="generic.html" class="button">Learn More</a></li>
-						</ul>
-					</footer>
-				</section>
-
 			</div>
 		</div>
 	</div>
-</div>
-	<!-- Footer -->
-<div class="container footer-container">
-	<footer id="footer">
-		<section>
-			<h2>Thank you for using Grimoire</h2>
-			<p>Grimoire is a web app designed by Matheus Scharf Heil as his final project for the Iron Hack Partime Bootcamp. 
-				<ul>
-					<li>Ruby on Rails</li>
-					<li>Ruby</li>
-					<li>JavaScript</li>
-					<li>HTML5</li>
-					<li>CSS</li>
-				</ul>
-			</p>
-		</section>
-		<section>
-			<h2>Contact</h2>
-			<dl class="alt">
-				<dt>Email:</dt>
-				<dd>grimoiremaster@gmail.com</dd>
-			</dl>
-			<ul class="icons">
-				<li><a href="#" class="icon fa-twitter alt"><span class="label">Twitter</span></a></li>
-				<li><a href="#" class="icon fa-facebook alt"><span class="label">Facebook</span></a></li>
-				<li><a href="#" class="icon fa-instagram alt"><span class="label">Instagram</span></a></li>
-				<li><a href="#" class="icon fa-github alt"><span class="label">GitHub</span></a></li>
-				<li><a href="#" class="icon fa-dribbble alt"><span class="label">Dribbble</span></a></li>
-			</ul>
-		</section>
-	</footer>
 </div>

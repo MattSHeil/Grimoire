@@ -18,3 +18,18 @@ task :get_mangas_extra_info => :environment do
 	mh = MangahereDataBase.new
 	mh.getMissingInfo
 end
+
+task :get_images => :environment do 
+	mh = MangahereDataBase.new
+	mh.getImages
+end	
+
+task :check_images => :environment do 
+	mh = UpdatingMangahereDb.new
+	mh.checkImgUrls
+end
+
+task :new_images => :environment do 
+	mh = UpdatingMangahereDb.new
+	mh.getNewImg
+end

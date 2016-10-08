@@ -10,4 +10,10 @@ class UserMangasController < ApplicationController
 		manga = Manga.find_by(id: params[:id])
 		user.mangas.destroy(manga)
 	end
+
+	def read
+		user = current_user
+		mangas = UserManga.where(user_id: current_user.id)
+		mangas.where(manga_id: params[:id]).update(updated: false)
+	end
 end

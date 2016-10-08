@@ -81,6 +81,17 @@ class UpdatingMangahereDb
 
 	end
 
+	def updateUsers(mangaId)
+		users = UserManga.where(manga_id: mangaId)
+		if users.empty?
+			puts "No users to update"
+		else	
+			users.each do | singleObj |
+				singleObj.update(updated: true)
+			end
+		end
+	end
+
 	def updateDB
 		arrayToBeUsed = scrapeLatestPage
 		checkPoint = arrayToBeUsed[0]
@@ -102,6 +113,9 @@ class UpdatingMangahereDb
 
 				a.update_attributes(total_chapters: newTotal, posted_date: newPostedDate)
 				puts "#{toUpdate[:name]} was updated"
+
+				updateUsers(a.id)
+
 			else
 				# byebug
 				pageRequest = Nokogiri::HTML(open(toUpdate[:link]))
@@ -159,6 +173,49 @@ class UpdatingMangahereDb
 		else
 			updateDB
 			puts "Update Completed"
+		end
+	end
+
+	def getNewImg
+		mangas = Manga.all
+		mangas.each do | singleManga |
+			if singleManga.manga_img.nil?
+				pageRequest = Nokogiri::HTML(open(singleManga.link_to_page))
+				imgScope = pageRequest.css("div.manga_detail_top img").first
+				if imgScope.nil?
+					puts "nothing to do here #{singleManga.title}, #{singleManga.id}"
+				else
+					MangaImg.create(manga_id: singleManga.id, cover_img_url: imgScope['src'])
+					puts singleManga.id
+					puts singleManga.title
+				end
+			else
+				puts "OK #{singleManga.id}"
+			end
+		end
+	end	
+
+	def checkImgUrls
+		allImg = MangaImg.all
+		allImg.each do | aImg |
+			puts aImg.manga_id 
+			begin 
+				open(aImg.cover_img_url)
+			rescue => error
+				if error
+					aImg.update(cover_img_url: '/assets/error_cover.jpg')
+					puts "Url updated for #{aImg.manga_id}"
+				end
+				pageRequest = Nokogiri::HTML(open(singleManga.link_to_page))
+				imgScope = pageRequest.css("div.manga_detail_top img").first
+				if imgScope.nil?
+					puts "nothing to do here #{singleManga.title}, #{singleManga.id}"
+				else
+					MangaImg.create(manga_id: singleManga.id, cover_img_url: imgScope['src'])
+					puts singleManga.id
+					puts singleManga.title
+				end
+			end	
 		end
 	end
 end

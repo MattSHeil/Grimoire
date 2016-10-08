@@ -170,5 +170,18 @@ class MangahereDataBase
 		end
 	end
 
-
+	def getImages
+		db = Manga.all
+		db.each do | singleManga |
+			pageRequest = Nokogiri::HTML(open(singleManga.link_to_page))
+			imgScope = pageRequest.css("div.manga_detail_top img").first
+			if imgScope.nil?
+				puts "nothing to do here #{singleManga.title}, #{singleManga.id}"
+			else
+				MangaImg.create(manga_id: singleManga.id, cover_img_url: imgScope['src'])
+				puts singleManga.id
+				puts singleManga.title
+			end
+		end	
+	end
 end

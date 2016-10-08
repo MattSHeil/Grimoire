@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915233940) do
+ActiveRecord::Schema.define(version: 20160929213008) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +49,14 @@ ActiveRecord::Schema.define(version: 20160915233940) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "manga_imgs", force: :cascade do |t|
+    t.integer  "manga_id"
+    t.string   "cover_img_url"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["manga_id"], name: "index_manga_imgs_on_manga_id", using: :btree
+  end
+
   create_table "mangas", force: :cascade do |t|
     t.string   "title"
     t.string   "link_to_page"
@@ -81,7 +90,6 @@ ActiveRecord::Schema.define(version: 20160915233940) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.boolean  "updated",    default: false
-
     t.index ["manga_id"], name: "index_user_mangas_on_manga_id", using: :btree
     t.index ["user_id"], name: "index_user_mangas_on_user_id", using: :btree
   end
@@ -106,6 +114,7 @@ ActiveRecord::Schema.define(version: 20160915233940) do
 
   add_foreign_key "labeled_mangas", "labels"
   add_foreign_key "labeled_mangas", "mangas"
+  add_foreign_key "manga_imgs", "mangas"
   add_foreign_key "mangas_artists", "artists"
   add_foreign_key "mangas_artists", "mangas"
   add_foreign_key "mangas_authors", "authors"

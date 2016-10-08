@@ -14,6 +14,8 @@ class Manga < ApplicationRecord
 	has_many :user_mangas
 	has_many :users, through: :user_mangas
 
+	has_one :manga_img
+
 	def self.search(params)
 		if (params).length == 1 
 	 		where("title iLIKE ?" , "#{params}%")

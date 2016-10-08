@@ -9,13 +9,11 @@
 			<div class="col s6">
 				
 				<div class="row center">
-					<img src="#">
+					<img src="<%= @img %>" class="manga_cover">
 				</div>
 				<div class="row center">
 				<% if current_user.nil? %>
-					<button class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn">
-						Log In to Add This Manga
-					</button>
+					<%= link_to 'Log In to Add this Manga', new_user_session_path, class:"waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn"%>
 				<% else %>
 					<% if current_user.mangas.find_by(id: @manga.id).nil? %>
 						<button id="add-btn" class="waves-effect waves-light btn-large transparent grey-text text-darken-4 mp-btn" data-id="<%= @manga.id%>">

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   # add and delete routes for users mangas
   post '/mangas/:id/add', to: 'user_mangas#add_manga', as: :add_manga_to_user
   delete '/mangas/:id/delete', to: 'user_mangas#delete_manga', as: :delete_manga_from_user
+  put '/user/mangas/read', to: 'user_mangas#read', as: :update_read_user_manga
 
   namespace :api do 
     resources :mangas

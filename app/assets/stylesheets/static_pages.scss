@@ -2,12 +2,33 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
- body {
+html {
+	height: auto;
+}
+ 
+body {
  	background-color: #935d8c;
 	background-image: url('/assets/overlay.png'), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	background-image: url('/assets/overlay.png'), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	background-image: url('/assets/overlay.png'), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background-image: url('/assets/overlay.png'), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url('/assets/overlay.png'), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);  
+}
+
+.thumbnails {
+	text-align: center;
+}
+
+.latests_list_container {
+	width: auto;
+	display: block;
+}
+
+.latests_list li{
+	display: inline;
+}
+
+li a {
+	display: inherit
 }
 
 .hp-btn {
@@ -24,6 +45,7 @@
 .home_main_container {
 	border-radius: 8px;
 	background-color: white;
+	margin-bottom: 2%; 
 }
 
 .home_content {
@@ -41,6 +63,7 @@ ul.nav-links.right a {
 	padding-left: 20px;
 	padding-right: 20px;
 }
+
 // .Search_form {
 // 	width: 30%; 
 // 	margin: none;
